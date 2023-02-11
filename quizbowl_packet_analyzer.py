@@ -1,3 +1,4 @@
+# First two instances of "packet =" are commented out
 """packet = """ """
 National Science Bee 2016-2017                                                                       
 
@@ -804,6 +805,7 @@ the smallest metro area to host a major league sports team, Green Bay. For the p
 this state which is home to Milwaukee and whose capital city is Madison.
 ANSWER: Wisconsin
 """
+# Imports Modules
 import time
 import sys
 import keyboard
@@ -812,35 +814,35 @@ count = 0
 points = 0
 i = 0
 answer_correct = False
-divided_packet = packet.strip().split("ANSWER")
-while count < 50:
-    answer_correct = False
-    five_seconds_finished = False
+divided_packet = packet.strip().split("ANSWER") # Splits packet into questions.
+while count < len(packet) + 1: # Repeats per question
+    answer_correct = False # The reading of the question will stop once this is true.
     print("\n")
     while i < len(divided_packet[count].split()) and answer_correct == False:
         if count != 0:
-            temp_list = divided_packet[count].replace((answer[0].lower().lstrip(":")).strip(), "").split()
+            words = divided_packet[count].replace((answer[0].lower().lstrip(":")).strip(), "").split() #".replace((answer[0].lower().lstrip(":")).strip(), "")"  was an attempt to remove the answer from the next item in the list, to make the printing more clear
+            # The previous line splits the question by spaces.
         else:
-            temp_list = divided_packet[count].split()
+            words = divided_packet[count].split() # This does the same as in if count != 0, except for the fact that the answer is not in the first item. Therefore, answer is initialized later on.
         answer = divided_packet[count + 1].split("(", 1)
-        sys.stdout.write(temp_list[i])
+        sys.stdout.write(words[i]) # Prints out the words, but not in a seperate line
         sys.stdout.write(" ")
         
-        time.sleep(0.15)
-        if keyboard.is_pressed("space"):
-            user_answer = input("Answer? ")
+        time.sleep(0.15) # Pause between words
+        if keyboard.is_pressed("space"): # If buzzes(no limit to the amount of buzzes per question)
+            user_answer = input("Answer? ") # Prompts
             if user_answer.lstrip() == (answer[0].lower().lstrip(":")).strip():
-                print("\nCorrect")
+                print("\nCorrect") # If the user_answer is the same as the figured out answer. There is more added to answer because answer is a list, and it must take the first item(the answer) and simplify it(e.g. spaces, case)
                 print("")
                 answer_correct = True
-                points = points + 1
+                points = points + 1 # Question ends and point awarded
             else:
-                print("\nWrong")
+                print("\nWrong") # 
                 print("")
         i = i + 1
     count = count + 1
     i = 0
-    if answer_correct == False:
+    if answer_correct == False: # Provides one chance for input if the question is still not answered The code is a repeat
         user_answer = input("Answer? ")
         if user_answer.lstrip() == (answer[0].lower().lstrip(":")).strip():
             print("\nCorrect")
@@ -850,4 +852,4 @@ while count < 50:
         else:
             print("\nWrong")
             print("")
-print("You have " + points + "!!!")
+print("You have " + points + "out of " + len(packet) + 1) # When the packet is finished, tells score out of legnth of divided_packet.
