@@ -814,6 +814,7 @@ count = 0
 points = 0
 i = 0
 answer_correct = False
+answer = ["", ""]
 divided_packet = packet.strip().split("ANSWER") # Splits packet into questions.
 while count < len(packet) + 1: # Repeats per question
     answer_correct = False # The reading of the question will stop once this is true.
